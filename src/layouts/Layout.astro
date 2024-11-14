@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+
+	</head>
+	<header style="grid-area: header;">
+		<div>
+			<span onclick="window.location.href='/'">{title}</span>
+		</div>
+		<div>
+			<span>Links</span>
+			<span>Create</span>
+		</div>
+	</header>
+	<body style="grid-area: body;">
+		<slot />
+	</body>
+	<footer style="grid-area: footer;">
+		<span>© 2025. All Rights Reserved.</span>
+	</footer>
+</html>
+<style is:global>
+
+</style>
+<style>
+	header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		font-weight: bolder;
+
+		padding: 12px 3rem;
+	}
+
+	footer {
+		padding: 16px;
+		display: flex;
+		justify-content: center;
+		> span {
+			font-size: 0.8rem;
+			opacity: 0.2;
+		}
+	}
+</style>

@@ -1,0 +1,33 @@
+services:
+
+  g-galery-dev:
+    build: .
+    ports:
+      - "4321:4321"
+    volumes:
+      - "./:/app"
+      - "/app/.tscache"
+      - "/app/dist"
+      - "/app/node_modules"
+    container_name: g-galery
+
+  g-galery-build:
+    build: ./dist
+    ports:
+      - "90:80"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.g-galery-build.rule=Host(`pradierh.fr`)
+      - traefik.http.routers.g-galery-build.entrypoints=websecure
+      - traefik.http.routers.g-galery-build.tls=true
+      - traefik.http.routers.g-galery-build.tls.certresolver=myresolver
+      - traefik.http.services.g-galery-build.loadbalancer.server.port=80
+    volumes:
+      - "./dist:/usr/share/nginx/html"
+    container_name: g-galery-build
+    networks: 
+      - proxy
+
+networks:
+  proxy:
+    external: true

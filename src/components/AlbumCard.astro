@@ -1,0 +1,87 @@
+---
+const { data } = Astro.props;
+---
+
+<article onclick=`window.location.href="/album/${data.id}"`>
+    <div class="albums-imgs">
+        <img src={data.coverPhotoBaseUrl} alt="Cover">
+        <img src={data.coverPhotoBaseUrl} alt="Cover">
+        <img src={data.coverPhotoBaseUrl} alt="Cover">
+    </div>
+    <div class="albums-info">
+        <h3>{data.title}</h3>
+        <span>{data.mediaItemsCount} Items</span>
+    </div>
+</article>
+
+<style>
+    article {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        box-sizing: border-box;
+
+        cursor: pointer;
+
+        .albums-imgs {
+            /* width: var(--image-cover-size); */
+            height: var(--image-cover-size);
+
+            img {
+                /* width: var(--image-cover-size); */
+                height: var(--image-cover-size);
+                object-fit: cover;
+                transition: all 500ms ease-in-out;
+                position: absolute;
+
+                &:nth-child(n) {
+                    transform: translateX(0) scale(1);
+                    opacity: 1;
+                }
+            }
+            
+        }
+
+        .albums-info {
+            padding: 1rem;
+
+            h3 {
+                margin: 0;
+            }
+            span {
+                opacity: 0.33;
+            }
+        }
+        
+    }
+</style>
+
+<script>
+    document.querySelectorAll("article ").forEach((article, ai) => {
+
+        setTimeout(() => {
+            article.querySelectorAll(".albums-imgs > img").forEach((img, ii) => {
+                    img.style.transform = `translate(${ii*3}rem, 0) scale(${-0.06*ii+1})`;
+                    img.style.opacity = -0.45*ii+1;
+                    img.style.zIndex = -ii;
+            })
+        }, ai * 50);
+        
+        article.addEventListener("mouseenter", (e) => {
+            e.currentTarget.querySelectorAll(".albums-imgs > img").forEach((img, ii) => {
+                img.style.transform = `translate(${ii*4}rem, 0) scale(${-0.02*ii+1})`;
+                img.style.opacity = -0.2*ii+1;
+                img.style.zIndex = -ii;
+            })
+        })
+        article.addEventListener("mouseleave", (e) => {
+            article.querySelectorAll(".albums-imgs > img").forEach((img, ii) => {
+                img.style.transform = `translate(${ii*3}rem, 0) scale(${-0.06*ii+1})`;
+                img.style.opacity = -0.45*ii+1;
+                img.style.zIndex = -ii;
+            })
+        })             
+    })
+</script>

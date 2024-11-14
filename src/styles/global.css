@@ -1,0 +1,50 @@
+:root {
+
+    --color-main : #ffffff;
+    --color-secondary : #ffbb00;
+    --color-background : #000000;
+
+    --border-radius: 0px;
+    --border-width : 1px;
+    --grid-gap : 0px;
+
+    --bp-mobile : 768px;
+
+    --image-cover-size : 12rem;
+}
+
+html {
+    font-family: system-ui, sans-serif;
+    font-size: 1.2rem;
+}
+
+body {
+    margin: 0;
+
+    display: grid;
+    grid-template: "header" auto 
+                    "main" auto 
+                    "footer" auto;
+    gap: var(--grid-gap);
+
+    background-color: var(--color-background);
+    color: var(--color-main);
+
+    > * {
+        outline: solid;
+        outline-width: var(--border-width);
+        outline-color: var(--color-main);
+    }
+}
+
+*::-webkit-scrollbar {
+    width: 0.33rem;
+    height: 0.33rem;
+}
+*::-webkit-scrollbar-track {
+    background-color: #33333370;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: slategrey;
+    outline: 1px solid slategrey;
+}
