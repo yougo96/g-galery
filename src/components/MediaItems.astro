@@ -1,4 +1,6 @@
 ---
+import Img from '../components/Img.astro';
+
 const response = await fetch(`https://photoslibrary.googleapis.com/v1/mediaItems`, {
 	method: 'GET',
 	headers: {
@@ -11,7 +13,7 @@ const mediaItems = await response.json();
 
 <div>
     {mediaItems.mediaItems.map(item => 
-        <img src={item.baseUrl} title={item.filename} alt="">
+        <Img url={item.baseUrl} data={item} />
     )}
 </div>
 
@@ -30,7 +32,7 @@ const mediaItems = await response.json();
         display: flex;
         flex-wrap: nowrap;
         
-        gap: 1px;
+        gap: var(--grid-gap);
     }
 
     img {

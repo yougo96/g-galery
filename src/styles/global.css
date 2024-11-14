@@ -6,7 +6,7 @@
 
     --border-radius: 0px;
     --border-width : 1px;
-    --grid-gap : 0px;
+    --grid-gap : 1px;
 
     --bp-mobile : 768px;
 
@@ -34,6 +34,27 @@ body {
         outline: solid;
         outline-width: var(--border-width);
         outline-color: var(--color-main);
+    }
+}
+
+main {
+    margin: auto;
+    padding: 1rem;
+    width: unset;
+    max-width: 1240px;
+
+    outline-width: 0px;
+    border: solid 1px var(--color-main);
+    border-width: 0 2px;
+
+    box-sizing: border-box;
+
+    hr {
+        margin: 0.5rem -1rem;
+    }
+
+    @media screen and (max-width: 1240px) {
+        border: 0;
     }
 }
 

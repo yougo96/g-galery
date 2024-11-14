@@ -1,16 +1,36 @@
 ---
 const { data } = Astro.props;
+
+const response = await fetch(`https://photoslibrary.googleapis.com/v1/mediaItems:search`, {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+		Authorization: `Bearer ${import.meta.env.AccessToken}`,
+	},
+    body: JSON.stringify({
+        albumId: data.id,
+        pageSize: 50,
+    })
+});
+const albumDatas = await response.json();
+// console.log(datas);
 ---
 
 <article onclick=`window.location.href="/album/${data.id}"`>
     <div class="albums-imgs">
         <img src={data.coverPhotoBaseUrl} alt="Cover">
-        <img src={data.coverPhotoBaseUrl} alt="Cover">
-        <img src={data.coverPhotoBaseUrl} alt="Cover">
+        {albumDatas && 
+            albumDatas.mediaItems.slice(0,8).map(item => 
+                <img src={item.baseUrl} alt="Cover">
+            )
+        }
     </div>
     <div class="albums-info">
         <h3>{data.title}</h3>
-        <span>{data.mediaItemsCount} Items</span>
+        <span>{data.mediaItemsCount} Items</span><br>
+        {albumDatas && 
+            <span>{albumDatas.mediaItems[0].mediaMetadata.creationTime.split("T")[0]}</span>
+        }
     </div>
 </article>
 
@@ -30,7 +50,7 @@ const { data } = Astro.props;
             height: var(--image-cover-size);
 
             img {
-                /* width: var(--image-cover-size); */
+                width: var(--image-cover-size);
                 height: var(--image-cover-size);
                 object-fit: cover;
                 transition: all 500ms ease-in-out;
@@ -46,6 +66,7 @@ const { data } = Astro.props;
 
         .albums-info {
             padding: 1rem;
+            z-index: 20;
 
             h3 {
                 margin: 0;
@@ -63,23 +84,23 @@ const { data } = Astro.props;
 
         setTimeout(() => {
             article.querySelectorAll(".albums-imgs > img").forEach((img, ii) => {
-                    img.style.transform = `translate(${ii*3}rem, 0) scale(${-0.06*ii+1})`;
-                    img.style.opacity = -0.45*ii+1;
+                    img.style.transform = `translate(${ii*4}rem, ${ii*0.24}rem) scale(${-0.04*ii+1})`;
+                    img.style.filter = `brightness(${-0.12*ii+1})`;
                     img.style.zIndex = -ii;
             })
         }, ai * 50);
         
         article.addEventListener("mouseenter", (e) => {
             e.currentTarget.querySelectorAll(".albums-imgs > img").forEach((img, ii) => {
-                img.style.transform = `translate(${ii*4}rem, 0) scale(${-0.02*ii+1})`;
-                img.style.opacity = -0.2*ii+1;
+                img.style.transform = `translate(${ii*5}rem, ${ii*0.12}rem) scale(${-0.02*ii+1})`;
+                img.style.filter = `brightness(${-0.05*ii+1})`;
                 img.style.zIndex = -ii;
             })
         })
         article.addEventListener("mouseleave", (e) => {
             article.querySelectorAll(".albums-imgs > img").forEach((img, ii) => {
-                img.style.transform = `translate(${ii*3}rem, 0) scale(${-0.06*ii+1})`;
-                img.style.opacity = -0.45*ii+1;
+                img.style.transform = `translate(${ii*4}rem, ${ii*0.24}rem) scale(${-0.04*ii+1})`;
+                img.style.filter = `brightness(${-0.12*ii+1})`;
                 img.style.zIndex = -ii;
             })
         })             

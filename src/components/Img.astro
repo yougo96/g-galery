@@ -1,0 +1,81 @@
+---
+const { url, data } = Astro.props;
+---
+
+<div class="img-frame">
+    <img src={url} alt="">
+    <div class="img-overlay"></div>
+    <ul>
+        <li><b>{data.filename}</b></li>
+        <li><b>{data.mediaMetadata.creationTime}</b></li>
+        {data.mediaMetadata.photo && 
+            <br>
+            <li>Camera</li>
+            <li>Brand: <b>{data.mediaMetadata.photo.cameraMake}</b></li>
+            <li>Model: <b>{data.mediaMetadata.photo.cameraModel}</b></li>
+            <li>Focal: <b>{data.mediaMetadata.photo.focalLength}</b></li>
+            <li>Apertur: <b>{data.mediaMetadata.photo.apertureFNumber}</b></li>
+            <li>Iso: <b>{data.mediaMetadata.photo.isoEquivalent}</b></li>
+            <li>Exposure: <b>{data.mediaMetadata.photo.exposureTime}</b></li>
+        }
+    </ul>
+</div>
+
+<style>
+    .img-frame {
+        position: relative;
+        height: var(--image-cover-size);
+        
+        /* width: var(--image-cover-size); */
+
+        &:hover, &:active, &:focus-within {
+            img {
+                object-fit: contain;
+            }
+            ul {
+                opacity: 0.8;
+            }
+            .img-overlay {
+                opacity: 0.5;
+            }
+        }
+
+        ul {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            margin: 0;
+            padding: 6px;
+            box-sizing: border-box;
+            list-style: none;
+            pointer-events: none;
+            overflow: hidden;
+            transition: all 300ms;
+
+            font-size: 0.6rem;
+            z-index: 10;
+            opacity: 0;
+        }
+
+        .img-overlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            pointer-events: none;
+
+            transition: all 300ms;
+            background-color: var(--color-background);
+            opacity: 0;
+            z-index: 5;
+        }
+
+        img {
+            /* position: absolute; */
+            height: 100%;
+            /* width: 100%; */
+            object-fit: cover;
+        }
+    }
+</style>
