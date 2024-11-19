@@ -2,7 +2,7 @@
 const { url, data } = Astro.props;
 ---
 
-<div class="img-frame">
+<div class="img-frame" onclick=`window.location.href="/image/${data.id}"`>
     <img src={url} alt="">
     <div class="img-overlay"></div>
     <ul>

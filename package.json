@@ -7,9 +7,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "deno": "deno task dev",
     "astro": "astro"
   },
   "dependencies": {
+    "@deno/astro-adapter": "^0.1.5",
     "astro": "^4.16.12"
   }
 }

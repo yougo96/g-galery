@@ -24,12 +24,9 @@ const datas = await response.json();
 		<hr>
 
 		<div class="albums-container">
-			{datas.albums.map(data => <AlbumCard data={data} /> )}
+			{ datas.albums ? ( datas.albums.map(data => <AlbumCard data={data} />) ) : ( <span class="error">No albums</span> )}
 		</div>
 		<br>
-		<div class="albums-container">
-			{datas.albums.map(data => <AlbumCard data={data} /> )}
-		</div>
 
 	</main>
 </Layout>

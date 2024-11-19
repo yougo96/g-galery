@@ -22,11 +22,11 @@ const { title } = Astro.props;
 	</head>
 	<header style="grid-area: header;">
 		<div>
-			<span onclick="window.location.href='/'">{title}</span>
+			<span class="header-title" onclick="window.location.href='/'">{title.split('>')[0]}</span><span style="opacity: 0.5;">&nbsp{title.split('>')[1]}</span>
 		</div>
 		<div>
-			<span>Links</span>
-			<span>Create</span>
+			<!-- <span>Links</span> -->
+			<span>+ Create</span>
 		</div>
 	</header>
 	<body style="grid-area: body;">
@@ -44,9 +44,17 @@ const { title } = Astro.props;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		font-weight: bolder;
+		font-weight: light;
 
 		padding: 12px 3rem;
+
+		.header-title {
+			cursor: pointer;
+			font-weight: bold;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 
 	footer {

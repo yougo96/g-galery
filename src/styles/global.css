@@ -16,6 +16,8 @@
 html {
     font-family: system-ui, sans-serif;
     font-size: 1.2rem;
+    scroll-behavior: smooth;
+    user-select: none;
 }
 
 body {
@@ -41,7 +43,10 @@ main {
     margin: auto;
     padding: 1rem;
     width: unset;
+
+    min-width: 320px;
     max-width: 1240px;
+    min-height: 66vh;
 
     outline-width: 0px;
     border: solid 1px var(--color-main);
@@ -68,4 +73,8 @@ main {
 *::-webkit-scrollbar-thumb {
     background-color: slategrey;
     outline: 1px solid slategrey;
+}
+
+.error {
+    color: #ffbbbb;
 }
