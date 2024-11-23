@@ -18,10 +18,9 @@ const mediaItems = await response.json();
 </div>
 
 <style>
-
     div {
         margin: 0 -1rem;
-        max-width: 100vw;
+        max-width: 95vw;
         overflow-x: scroll;
         overflow-y: hidden;
 
@@ -34,6 +33,10 @@ const mediaItems = await response.json();
         flex-wrap: nowrap;
         
         gap: var(--grid-gap);
+
+        > span {
+            margin: 0 1rem;
+        }
     }
 
     img {

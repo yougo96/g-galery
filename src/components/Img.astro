@@ -1,11 +1,15 @@
 ---
 const { url, data } = Astro.props;
----
+const dialogData = JSON.stringify(data);
 
-<div class="img-frame" onclick=`window.location.href="/image/${data.id}"`>
+---
+<!-- onclick=`window.location.href="/image/${data.id}"` -->
+<div class="img-frame" 
+    onclick=`toggleModal("dialog", ${dialogData})`
+>
     <img src={url} alt="">
     <div class="img-overlay"></div>
-    <ul>
+    <ul class="img-info">
         <li><b>{data.filename}</b></li>
         <li><b>{data.mediaMetadata.creationTime}</b></li>
         {data.mediaMetadata.photo && 

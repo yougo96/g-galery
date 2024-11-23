@@ -44,8 +44,8 @@ main {
     padding: 1rem;
     width: unset;
 
-    min-width: 320px;
-    max-width: 1240px;
+    width: clamp(320px, 100%, 1240px);
+
     min-height: 66vh;
 
     outline-width: 0px;

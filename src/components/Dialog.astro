@@ -1,0 +1,160 @@
+---
+const { id, data } = Astro.props;
+---
+
+<dialog id={id} onclick="event.target==this && this.close()">
+
+    <header>
+        <button onclick=`document.querySelector('dialog img').classList.toggle('fullscreen')` >⛶</button><button aria-label="Close" onclick=`toggleModal("${id}")`>✖</button>
+    </header>
+
+                <div class="img-container">
+                    <img onclick=`document.querySelector('dialog img').classList.toggle('fullscreen')` src=`` alt="Cover">
+                    <ul class="img-info" style="display: none;">
+                        <li><b>filename</b></li>
+                        <li><b>creationTime</b></li>
+                        <li>Camera</li>
+                        <li>Brand: <b>cameraMake</b></li>
+                        <li>Model: <b>cameraModel</b></li>
+                        <li>Focal: <b>focalLength</b></li>
+                        <li>Apertur: <b>apertureFNumber</b></li>
+                        <li>Iso: <b>isoEquivalent</b></li>
+                        <li>Exposure: <b>exposureTime</b></li>
+                    </ul>
+                </div>
+
+        <footer class="img-toolbars">
+            <div id=""></div>
+            <div id=""> 
+                <button>❰</button>
+                <button>❱</button> 
+            </div>
+            <div id="info">
+                <button>ℹ️</button>
+            </div>
+        </footer>
+</dialog>
+
+<style>
+
+    dialog {
+        animation: fadeOut 200ms ease-in-out 1;
+        transition-behavior: allow-discrete;
+        border: 0;
+        padding: 0;
+        overflow: hidden;
+
+        background: var(--color-background);
+        border-radius: var(--border-radius);
+        outline: solid var(--border-width) var(--color-main);
+        box-shadow: 0 0 128px hsla(0, 0%, 0%, 0.33);        
+
+        color: var(--value-white);
+
+        z-index: 2000;       
+
+
+        button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-main);
+            font-size: 1rem;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .img-container {
+            position: relative;
+
+            .fullscreen {
+                    position: fixed;
+                    top: 0; left: 0;
+                    min-width: 100vw !important;
+                    min-height: 100vh !important;
+                    z-index: 1000;
+                    background-color: var(--color-background);
+            }
+
+            img {
+                max-height: 85vh;
+
+                min-height: 160px;
+                min-width: 320px;
+
+                object-fit: contain;
+                outline: solid var(--border-width) var(--color-main);
+
+                transition: all 300ms;
+                
+            }
+            .img-info, ul {                
+                opacity: 0.8;
+                font-size: 0.6rem;
+
+                position: absolute;
+                right: 0; bottom: 0;
+                margin: 16px;
+                padding: 6px;
+                list-style: none;
+                height: fit-content;
+                width: fit-content;
+
+                background: rgba(0, 0, 0, 0.555);
+            }
+        }
+        header {
+            padding: 0.2rem 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: end;
+        }
+        footer, .img-toolbars {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            text-align: center;
+            padding: 0.2rem 2rem;
+        }
+
+    }
+
+    dialog[open] {
+        animation: fadeIn 200ms ease-in-out 1;
+        transition-behavior: allow-discrete;
+
+        display: grid;
+    }
+    dialog::backdrop {
+        background-color: hsla(0, 0%, 0%, 0);
+        backdrop-filter: blur(0px);
+        transition: all 150ms;
+    }
+    dialog[open]::backdrop {
+        background-color: hsla(0, 0%, 0%, 0.1);
+        backdrop-filter: blur(3px);
+    }
+
+    @keyframes fadeIn {
+        0%{ display: none; opacity: 0; transform: translateY(-10px) scale(0.99); }
+        5%{ opacity: 0;}
+        100%{ display: inherit; opacity: 1; transform: unset; }
+    }
+    @keyframes fadeOut {
+        0%{ display: inherit; opacity: 1; transform: unset;	}
+        95%{ opacity: 0;}
+        100% { opacity: 0; transform: translateY(-10px) scale(0.99); visibility: hidden; display: none;	}
+    }
+    
+</style>
+
+<script is:inline>
+    document.querySelector('#info').addEventListener('mouseenter', (e) => {
+        document.querySelector('dialog .img-info').style.display = "block";
+    })
+    document.querySelector('#info').addEventListener('mouseleave', (e) => { 
+        document.querySelector('dialog .img-info').style.display = "none";
+    })
+</script>

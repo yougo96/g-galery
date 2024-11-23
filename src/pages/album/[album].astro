@@ -1,4 +1,5 @@
 ---
+import Dialog from '../../components/Dialog.astro';
 import Img from '../../components/Img.astro';
 import Layout from '../../layouts/Layout.astro';
 
@@ -21,16 +22,14 @@ const datas = await response.json();
 
 <Layout title="g-galery>album">
     <main style="grid-area: main;">
-        <!-- <pre>
-            {JSON.stringify(datas, null, 2)}
-        </pre> -->
-        <a href="/" style="display: block; width: 100%; text-align: center; text-decoration: none; color: var(--color-main);">⬆</a>
-        <hr>
         <div class="img-container">
             {datas.mediaItems ? 
                 (datas.mediaItems.map(item => <Img url={item.baseUrl} data={item} />)) : (<span class="error">No images</span>)
             }
         </div>
+
+        <Dialog id="dialog" data={null} />
+
     </main>
 </Layout>
 

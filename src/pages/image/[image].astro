@@ -16,13 +16,22 @@ const datas = await response.json();
 
 <Layout title="g-galery>image">
     <main style="grid-area: main;">
-        <a href="/" style="display: block; width: 100%; text-align: center; text-decoration: none; color: var(--color-main);">⬆</a>
-        <hr>
-        <h3>{image}</h3>
         {datas.id ?
             (
-                <img src=`${datas.baseUrl}=w2048-h1024` alt="Cover">
-                <pre>{JSON.stringify(datas, null, 2)}</pre>
+                <div class="img-container">
+                    <img src=`${datas.baseUrl}=w2048-h1024` alt="Cover">
+                    <ul class="img-info">
+                        <li><b>{datas.filename}</b></li>
+                        <li><b>{datas.mediaMetadata.creationTime}</b></li>
+                        <li>Camera</li>
+                        <li>Brand: <b>{datas.mediaMetadata.photo.cameraMake}</b></li>
+                        <li>Model: <b>{datas.mediaMetadata.photo.cameraModel}</b></li>
+                        <li>Focal: <b>{datas.mediaMetadata.photo.focalLength}</b></li>
+                        <li>Apertur: <b>{datas.mediaMetadata.photo.apertureFNumber}</b></li>
+                        <li>Iso: <b>{datas.mediaMetadata.photo.isoEquivalent}</b></li>
+                        <li>Exposure: <b>{datas.mediaMetadata.photo.exposureTime}</b></li>
+                    </ul>
+                </div>
             ) : 
             (<span class="error">'No data'</span>)
         }
@@ -31,7 +40,24 @@ const datas = await response.json();
 </Layout>
 
 <style>
-    img {
-        width: 100%;
+    .img-container {
+        margin: -1rem;
+        padding: 0;
+        img {
+            position: relative;
+            width: 100%;
+            max-height: 99vh;
+            object-fit: contain;
+        }
+        ul {
+            opacity: 0.8;
+            font-size: 0.6rem;
+            margin: 0;
+            padding: 6px;
+            list-style: none;
+            height: fit-content;
+            width: 100%;
+        }
     }
+    
 </style>
