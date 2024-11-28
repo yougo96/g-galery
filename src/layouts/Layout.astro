@@ -24,7 +24,7 @@ const { title } = Astro.props;
 	</head>
 	<header style="grid-area: header;">
 		<div>
-			<span class="header-title" onclick="window.location.href='/'">{title.split('>')[0]}</span><span style="opacity: 0.5;">&nbsp{title.split('>')[1]}</span>
+			<span tabindex="0" class="header-title" onclick="window.location.href='/'">{title.split('>')[0]}</span><span style="opacity: 0.5;">&nbsp{title.split('>')[1]}</span>
 		</div>
 		<div>
 			<!-- <span>Links</span> -->

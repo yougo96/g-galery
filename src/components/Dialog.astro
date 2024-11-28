@@ -1,15 +1,17 @@
 ---
 const { id, data } = Astro.props;
+const dialogData = JSON.stringify(data);
+let index = 0
 ---
 
-<dialog id={id} onclick="event.target==this && this.close()">
+<dialog tabindex="-1" data-img={dialogData} data-index={index} id={id} onclick="event.target==this && this.close()">
 
     <header>
         <button onclick=`document.querySelector('dialog img').classList.toggle('fullscreen')` >⛶</button><button aria-label="Close" onclick=`toggleModal("${id}")`>✖</button>
     </header>
 
                 <div class="img-container">
-                    <img onclick=`document.querySelector('dialog img').classList.toggle('fullscreen')` src=`` alt="Cover">
+                    <img onclick=`document.querySelector('dialog img').classList.toggle('fullscreen')` src={data && data[index].baseUrl} alt="Cover">
                     <ul class="img-info" style="display: none;">
                         <li><b>filename</b></li>
                         <li><b>creationTime</b></li>
@@ -26,8 +28,8 @@ const { id, data } = Astro.props;
         <footer class="img-toolbars">
             <div id=""></div>
             <div id=""> 
-                <button>❰</button>
-                <button>❱</button> 
+                <button id="previous" onclick="findNext(-1)">❰</button>
+                <button id="next" onclick="findNext(1)">❱</button> 
             </div>
             <div id="info">
                 <button>ℹ️</button>
@@ -36,7 +38,6 @@ const { id, data } = Astro.props;
 </dialog>
 
 <style>
-
     dialog {
         animation: fadeOut 200ms ease-in-out 1;
         transition-behavior: allow-discrete;
@@ -108,7 +109,7 @@ const { id, data } = Astro.props;
         header {
             padding: 0.2rem 2rem;
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             justify-content: end;
         }
         footer, .img-toolbars {
@@ -151,10 +152,53 @@ const { id, data } = Astro.props;
 </style>
 
 <script is:inline>
+    // Event listener
     document.querySelector('#info').addEventListener('mouseenter', (e) => {
         document.querySelector('dialog .img-info').style.display = "block";
     })
     document.querySelector('#info').addEventListener('mouseleave', (e) => { 
         document.querySelector('dialog .img-info').style.display = "none";
     })
+
+    document.querySelector("dialog").onkeydown = logKey;
+    function logKey(e) {
+        if (e.code == "ArrowRight") findNext(1)
+        if (e.code == "ArrowLeft") findNext(-1)
+    }
+
+    // Get data
+    let data = document.querySelector('dialog').dataset.img
+    data = JSON.parse(data)
+
+    // Functions
+    function findNext(operator= 1) {
+        const index = document.querySelector('dialog').dataset.index
+        let newIndex = Number(index)+operator
+
+        if (operator > 0 & index >= data.length-1) {
+            newIndex = 0
+            console.log("retour au début")
+        }
+        if (operator < 0 & index <= 0) {
+            newIndex = data.length-1
+            console.log("a la fin")
+        }
+
+        setModalIndex(document.querySelector('dialog'), newIndex)
+    }
+
+    function setModalIndex(modal, index) {
+        console.log("setModalIndex", index)
+
+        modal.dataset.index = index;
+        modal.querySelector('img').src = data[index].baseUrl + "=w2048-h1024";
+        modal.querySelectorAll('.img-info > li > b')[0].innerText = data[index].filename;
+        modal.querySelectorAll('.img-info > li > b')[1].innerText = data[index].mediaMetadata.creationTime;
+        modal.querySelectorAll('.img-info > li > b')[2].innerText = data[index].mediaMetadata.photo.cameraMake;
+        modal.querySelectorAll('.img-info > li > b')[3].innerText = data[index].mediaMetadata.photo.cameraModel;
+        modal.querySelectorAll('.img-info > li > b')[4].innerText = data[index].mediaMetadata.photo.focalLength;
+        modal.querySelectorAll('.img-info > li > b')[5].innerText = data[index].mediaMetadata.photo.apertureFNumber
+        modal.querySelectorAll('.img-info > li > b')[6].innerText = data[index].mediaMetadata.photo.isoEquivalent;
+        modal.querySelectorAll('.img-info > li > b')[7].innerText = data[index].mediaMetadata.photo.exposureTime;
+    }
 </script>

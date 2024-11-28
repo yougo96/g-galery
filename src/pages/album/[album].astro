@@ -24,11 +24,11 @@ const datas = await response.json();
     <main style="grid-area: main;">
         <div class="img-container">
             {datas.mediaItems ? 
-                (datas.mediaItems.map(item => <Img url={item.baseUrl} data={item} />)) : (<span class="error">No images</span>)
+                (datas.mediaItems.map((item, index) => <Img index={index} id={item.id} url={item.baseUrl} data={item} />)) : (<span class="error">No images</span>)
             }
         </div>
 
-        <Dialog id="dialog" data={null} />
+        <Dialog id="dialog" data={datas.mediaItems} />
 
     </main>
 </Layout>

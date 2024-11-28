@@ -1,11 +1,11 @@
 ---
-const { url, data } = Astro.props;
+const { index, id, url, data } = Astro.props;
 const dialogData = JSON.stringify(data);
 
 ---
 <!-- onclick=`window.location.href="/image/${data.id}"` -->
-<div class="img-frame" 
-    onclick=`toggleModal("dialog", ${dialogData})`
+<div index={index} id={id} class="img-frame" 
+    onclick=`toggleModal("dialog", ${index})`
 >
     <img src={url} alt="">
     <div class="img-overlay"></div>
@@ -29,6 +29,9 @@ const dialogData = JSON.stringify(data);
     .img-frame {
         position: relative;
         height: var(--image-cover-size);
+        width: min-content;
+
+
         
         /* width: var(--image-cover-size); */
 
@@ -78,8 +81,8 @@ const dialogData = JSON.stringify(data);
         img {
             /* position: absolute; */
             height: 100%;
-            /* width: 100%; */
             object-fit: cover;
+            
         }
     }
 </style>

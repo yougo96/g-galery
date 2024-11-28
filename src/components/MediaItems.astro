@@ -1,19 +1,12 @@
 ---
 import Img from '../components/Img.astro';
 
-const response = await fetch(`https://photoslibrary.googleapis.com/v1/mediaItems`, {
-	method: 'GET',
-	headers: {
-		'Content-Type': 'application/json',
-		Authorization: `Bearer ${import.meta.env.AccessToken}`,
-	},
-});
-const mediaItems = await response.json();
+const { data } = Astro.props;
 ---
 
 <div>
-    {mediaItems.mediaItems ? 
-        (mediaItems.mediaItems.map(item => <Img url={item.baseUrl} data={item} />)) : (<span class="error">No images</span>)
+    {data ? 
+        (data.map((item, index) => <Img index={index} id={item.id} url={item.baseUrl} data={item} />)) : (<span class="error">No images</span>)
     }
 </div>
 
